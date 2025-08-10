@@ -1,0 +1,15 @@
+defaults:
+  - _self_ 
+
+transforms:
+  noop:
+    _target_: conf.noop.Transform
+    cfg: {}
+  
+  train:
+    _target_: data.transforms.PixelAug
+    cfg: {}
+    
+  eval:
+    _target_: data.transforms.Identity
+    cfg: {}

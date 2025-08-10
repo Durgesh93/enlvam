@@ -1,0 +1,11 @@
+defaults:
+  - _self_ 
+
+pbars:
+  noop:
+    _target_: conf.noop.Pbar 
+    cfg: {}
+    
+  tqdm:
+    _target_: lightning.pytorch.callbacks.TQDMProgressBar
+    refresh_rate: 1

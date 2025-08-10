@@ -1,0 +1,11 @@
+defaults:
+  - _self_ 
+
+summary:
+  noop:
+    _target_: conf.noop.Summary
+    max_depth: 4
+  
+  tqdm:
+    _target_: lightning.pytorch.callbacks.ModelSummary
+    max_depth: 4

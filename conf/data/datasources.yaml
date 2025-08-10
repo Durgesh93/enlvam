@@ -1,0 +1,22 @@
+defaults:
+  - _self_ 
+
+  
+datasources:
+  noop:
+    _target_: conf.noop.DataSource
+    cfg:
+      splitter:
+        split_name: 'all'
+        filter_rule: 'default'
+        labeled_fraction: 1.0
+  
+  
+  plaxlv_gev2private:
+    _target_: data.datasource.Plaxlv_GEv2private_H5
+    cfg:
+      filepath: ${c.paths.dataroot}/gev2_private_bmode.h5
+      splitter:
+        seed: ${oc.select:c.seed,'random'}
+        test_split_rule: key={split},values={test}
+        fold_strategy_rule: fold_num={${oc.select:c.fold_num,0}},num_folds={10},strategy={gkfold,group={series_uid}}

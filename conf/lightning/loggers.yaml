@@ -1,0 +1,24 @@
+defaults:
+  - _self_ 
+
+
+loggers:
+  noop:
+    _target_: conf.noop.Logger 
+    cfg: {}
+
+  mlflowEx:
+    _target_: data.logger.ExtendedMLFlowLogger
+    mode: online
+    tracking_uri:  http://localhost:5000
+    experiment_name: ammmode_study
+    run_name: ${oc.jobname:}
+
+  wandb:
+    _target_:  lightning.pytorch.loggers.WandbLogger
+    save_dir: ${oc.select:e.paths.logroot,'.'}
+    offline: true
+    project: enlvam
+    entity: durgesh
+    name: ${oc.jobname:}
+

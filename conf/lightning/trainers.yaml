@@ -1,0 +1,35 @@
+defaults:
+  - _self_ 
+
+trainers:
+  noop:
+    _target_: conf.noop.Trainer
+    logger: noop
+    callbacks: []
+    cfg: {}
+  
+  default:
+    _target_: lightning.Trainer
+    accelerator      : ${oc.acc:}
+    max_epochs       : ${oc.select:c.max_epochs,1}
+    default_root_dir : ${oc.select:c.paths.logroot,''}
+    enable_progress_bar: true
+    num_sanity_val_steps : 0
+    enable_model_summary: false
+    limit_train_batches: null
+    limit_val_batches: null
+    limit_test_batches: null
+    devices: [0]
+    
+  
+  debug:
+    _target_: lightning.Trainer
+    accelerator      : ${oc.acc:}
+    max_epochs       : ${oc.select:c.max_epochs,1}
+    default_root_dir : ${oc.select:c.paths.logroot,''}
+    num_sanity_val_steps : 0
+    limit_train_batches: 1
+    limit_val_batches: 1
+    limit_test_batches: 1
+    enable_model_summary: false
+    devices: [0]

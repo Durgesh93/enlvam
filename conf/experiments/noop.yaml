@@ -1,0 +1,22 @@
+defaults:
+  - _self_
+
+
+trainer: 
+  name: noop
+  pbar: noop
+  logger: noop
+  checkpointer:
+    enable: true
+    metric: noop
+    mode: 'min'
+
+
+litmodel:
+  _target_: conf.noop.litmodel
+  _recursive_: false
+  cfg:
+    model: noop
+    optimizer: noop
+    scheduler: noop
+    loss: noop

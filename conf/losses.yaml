@@ -1,0 +1,12 @@
+defaults:
+  - _self_ 
+
+
+losses:
+  noop:
+    _target: conf.noop.Loss
+    cfg: {}
+  
+  l2_loss:
+    _target_:  losses.L2_loss
+    W       : 10

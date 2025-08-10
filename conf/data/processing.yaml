@@ -1,0 +1,47 @@
+defaults:
+  - _self_ 
+  
+processing:
+  noop:
+    _target_:  conf.noop.Processing 
+    cfg: {}
+
+  extract_banchor_frame_and_landmarks_with_gaussian_heatmaps:
+    _target_: data.processing.Bmode_AFC
+    cfg:
+      all_frames: false
+      landmarks: true
+      heatmap:
+        type: 'gaussian'
+        ratio: 0.1
+        sigma: 0.1
+  
+  extract_banchor_frame_and_landmarks:
+    _target_: data.processing.Bmode_AFC
+    cfg:
+      all_frames: false
+      landmarks: true
+      
+
+  banchor_frame_pred_plotting:
+    _target_: data.processing.Bmode_AFC
+    cfg:
+      all_frames: false
+      landmarks: false
+  
+  
+  extract_amm_patch_and_landmarks_with_gaussian_heatmaps:
+    _target_: data.processing.AMM_AFC 
+    cfg:
+      window_size: 64
+      heatmap:
+        type: 'gaussian'
+        ratio: 0.1
+        sigma: 0.1
+
+  extract_amm_patch_and_landmarks:
+    _target_: data.processing.AMM_AFC 
+    cfg:
+      landmarks: true
+      all_frames: false
+      window_size: 64

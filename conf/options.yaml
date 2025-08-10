@@ -1,0 +1,53 @@
+defaults:
+  - _self_
+  - data/datasources
+  - data/processing
+  - data/transforms
+  - lightning/checkpointers
+  - lightning/loggers
+  - lightning/pbars
+  - lightning/summary
+  - lightning/trainers
+  - metrics
+  - models
+  - losses
+  - optimizers
+  - schedulers
+  - override hydra/hydra_logging : disabled  
+  - override hydra/job_logging   : disabled
+
+
+modules:
+  echotools:
+    _target_: echotools.EchoTools
+
+
+hydra:   
+  run:
+    dir: .
+  output_subdir : null
+
+paths:
+  env: ${oc.env:ENVIRONMENT} 
+  storage_prefix: '${oc.ifelse:${.env}, 
+    lumid, ./dirs,
+    ${oc.ifelse:${.env}, 
+      gev2private, ./dirs,
+      ${oc.ifelse:${.env}, 
+        noop, ./dirs,
+        ./dirs/.docker
+      }
+    }
+  }'
+  dataroot : '${.storage_prefix}/data_storage'
+  fileroot : '${.storage_prefix}/files'
+  snaproot : '${.storage_prefix}/snapshots'
+  logroot  : '${.storage_prefix}/logs'
+  figroot  : '${.storage_prefix}/figs'
+  preroot  : '${.storage_prefix}/pretrained'
+  
+
+pin_memory: true
+num_workers_per_dataloader: 2
+
+

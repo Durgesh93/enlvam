@@ -1,0 +1,54 @@
+defaults:
+  - _self_
+
+
+trainer: 
+  name: default
+  pbar: tqdm
+  logger: wandb
+  checkpointer:
+    enable: true
+    metric: 'bmode/predicted/pix/MAE/lv'
+    mode: 'min'
+
+datamodule:
+  _target_: data.datamodule.LitDatamodule
+  _recursive_: false
+  cfg:
+    dataloaders:
+      - id: train/DS1
+        batchsize: 2
+        bsampler: random
+        datasource: plaxlv_gev2private
+        split_name: train_l
+        processing: extract_banchor_frame_and_landmarks_with_gaussian_heatmaps
+        transform:  train
+
+      - id: val/bmode
+        batchsize: 2
+        datasource: plaxlv_gev2private
+        split_name: val
+        processing: extract_banchor_frame_and_landmarks
+        transform:  eval
+        metrics: banchor_frame_score_evaluation
+            
+
+      
+
+litmodel:
+  _target_: litmodule.LVAM
+  _recursive_: false
+  cfg:
+    model: Unet_G4_DSNT
+    optimizer: 'adam'
+    scheduler: 'step'
+    loss: 'l2_loss'
+
+
+hparams:
+  T: 1
+  fold_num: 0
+  seed: 42
+  lr: 1e-3
+  weight_decay: 1e-4
+  max_epochs: 100

@@ -1,0 +1,11 @@
+defaults:
+  - _self_ 
+
+checkpointer:
+  _target_: lightning.pytorch.callbacks.ModelCheckpoint
+  dirpath:  ${oc.select:c.paths.snaproot,'.'}
+  monitor: none
+  mode: 'min'
+  filename: model_${oc.jobname:}
+  auto_insert_metric_name: false
+  save_weights_only: true

@@ -1,0 +1,45 @@
+defaults:
+  - _self_ 
+
+
+metrics:
+  noop:
+    _target: conf.noop.Metrics
+    cfg:
+      params: []
+  
+  cat:
+    _target: data.metrics.CatDictMetric
+    cfg:
+      params: []
+  
+
+  banchor_frame_score_evaluation:
+    _target_: data.metrics.LVAM_Metrics_Base
+    cfg:
+      params:
+        - x_gt_brefSL
+        - x_gt_valid
+        - x_pred_bcoords
+        - x_pred_bregSL_projbcoords
+        - x_gt_bcoords
+        - x_pred_bgtrefSL_projbcoords
+        - y_dataid
+        - y_keyframe_idx
+        - y_phase
+        - y_bpix2cmratio
+        
+
+  banchor_frame_pred_plotting:
+    _target_: data.metrics.LVAM_Metrics_Base
+    cfg:
+      params:
+        - x_binputs
+        - x_pred_bcoords
+        - x_pred_bSL
+        - x_pred_bSLA
+        - x_pred_bregSL_projbcoords
+        - y_dataid
+        - y_aidx
+        - y_keyframe_idx
+        - y_bpix2cmratio

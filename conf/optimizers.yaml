@@ -1,0 +1,15 @@
+defaults:
+  - _self_ 
+
+optimizers:
+  noop:
+    _target_     : conf.noop.Optimizer
+    lr           : 0.1
+    weight_decay : 0.1
+    params       : ???
+
+  adam:
+    _target_     : torch.optim.Adam
+    lr           : ${oc.select:c.lr,0.001}
+    weight_decay : ${oc.select:c.weight_decay,1e-5}
+    params       : ???
